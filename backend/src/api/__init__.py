@@ -1,0 +1,4 @@
+"""
+API package
+Contains all API routes and dependencies.
+"""

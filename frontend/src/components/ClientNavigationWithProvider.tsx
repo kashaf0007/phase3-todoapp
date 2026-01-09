@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useRef } from 'react';
-import { Navigation } from 'src/components/Navigation';
+import { Navigation } from '@/components/Navigation';
 
 export default function ClientNavigationWithProvider() {
   const queryClientRef = useRef<QueryClient | null>(null);

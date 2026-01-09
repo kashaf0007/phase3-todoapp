@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "src/lib/auth-client";
+import { useAuth } from "@/lib/auth-client";
 import { AuthGuard } from "../components/AuthGuard";
 import { TaskForm } from "../components/TaskForm";
-import { taskApi } from "src/lib/api";
+import { taskApi } from "@/lib/api";
 import type { TaskUpdate } from "../types/task";
 
 export default function TaskEditPageClient() {

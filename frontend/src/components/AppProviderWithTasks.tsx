@@ -21,9 +21,9 @@ export default function AppProviderWithTasks() {
 
   return (
     <QueryClientProvider client={queryClientRef.current}>
-      <div className="app-container">
+      <div className="app-container min-h-screen flex flex-col">
         <ClientNavigation />
-        <main>
+        <main className="flex-grow">
           <TasksPageClient />
         </main>
       </div>

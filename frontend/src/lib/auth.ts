@@ -15,7 +15,7 @@ import { createAuthClient } from "better-auth/react";
  * - 7-day session duration (per spec Assumption 2)
  */
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:7860",
 });
 
 /**

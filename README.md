@@ -30,17 +30,30 @@ See `specs/001-fullstack-todo-app/quickstart.md` for detailed setup instructions
 4. Run frontend: `cd frontend && npm install && npm run dev`
 5. Visit: http://localhost:3000
 
-## Vercel Deployment
+## Production Deployment
 
-To deploy the frontend on Vercel, follow these steps:
+### Backend (Hugging Face Space)
+Deploy the backend to Hugging Face Spaces:
+1. Create a Hugging Face Space with the backend code
+2. Configure environment variables:
+   - `BETTER_AUTH_SECRET`: Your JWT secret
+   - `DATABASE_URL`: Your Neon PostgreSQL connection string
+3. The backend will be accessible at: `https://your-username-todo-phase02.hf.space`
 
+### Frontend (Vercel)
+Deploy the frontend on Vercel:
 1. Push your code to a GitHub repository
 2. Connect your repository to Vercel
 3. In the Vercel dashboard, set the following environment variables:
-   - `NEXT_PUBLIC_API_URL`: The URL of your deployed backend API (e.g., `https://your-backend-app.vercel.app` or your production backend URL)
+   - `NEXT_PUBLIC_API_URL`: Your Hugging Face backend URL (e.g., `https://kashafaman123-todo-phase02.hf.space`)
    - `BETTER_AUTH_SECRET`: The same JWT secret used in your backend
 4. Set the build command to: `cd frontend && npm install && npm run build`
 5. Set the output directory to: `frontend/.next`
+
+### Important Notes
+- Both frontend and backend must use the same `BETTER_AUTH_SECRET`
+- The backend is configured to allow CORS requests from `https://hackathon2-phase1-five.vercel.app`
+- Make sure both services are deployed and running before testing
 
 ## Documentation
 - Specification: `specs/001-fullstack-todo-app/spec.md`

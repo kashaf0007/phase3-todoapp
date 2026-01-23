@@ -6,7 +6,7 @@
 import { getAuthToken, signOut } from "./auth-client";
 import type { Task, TaskCreate, TaskUpdate, TaskCompletionToggle } from "../types/task";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:7860";
 
 /**
  * Generic API request with JWT authentication

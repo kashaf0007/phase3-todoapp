@@ -16,12 +16,13 @@ def generate_uuid():
 class MessageBase(SQLModel):
     user_id: str
     conversation_id: str
-    role: Literal["user", "assistant"]
+    role: str
     content: str
 
 class Message(MessageBase, table=True):
     __tablename__ = "messages"
-    
+    __table_args__ = {"extend_existing": True}
+
     id: Optional[str] = Field(default_factory=generate_uuid, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     

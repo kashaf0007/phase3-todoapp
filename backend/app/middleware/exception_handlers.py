@@ -3,7 +3,7 @@ Global exception handlers for the application
 """
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
-from app.utils.exceptions import BaseAppException, ResourceNotFoundException, UnauthorizedAccessException, InvalidParametersException
+from ..utils.exceptions import BaseAppException, ResourceNotFoundException, UnauthorizedAccessException, InvalidParametersException
 from typing import Union
 import logging
 

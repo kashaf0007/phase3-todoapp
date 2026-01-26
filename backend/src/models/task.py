@@ -7,6 +7,7 @@ Supports five basic operations: create, read, update, delete, mark complete.
 from datetime import datetime
 from typing import Optional
 from sqlmodel import SQLModel, Field, Relationship
+from sqlalchemy.schema import CreateTable
 
 
 class Task(SQLModel, table=True):
@@ -16,6 +17,7 @@ class Task(SQLModel, table=True):
     Security: ALL queries MUST filter by user_id from authenticated JWT token.
     """
     __tablename__ = "tasks"
+    __table_args__ = {"extend_existing": True}
 
     # Primary key
     id: Optional[int] = Field(

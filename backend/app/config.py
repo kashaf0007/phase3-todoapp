@@ -7,8 +7,8 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
-# Database configuration
-NEON_DATABASE_URL = os.getenv("NEON_DATABASE_URL")
+# Database configuration - Use DATABASE_URL from .env file
+NEON_DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Authentication configuration
 BETTER_AUTH_SECRET = os.getenv("BETTER_AUTH_SECRET")

@@ -15,6 +15,7 @@ class Message(SQLModel, table=True):
     Security: ALL queries MUST filter by user_id from authenticated JWT token.
     """
     __tablename__ = "messages"
+    __table_args__ = {"extend_existing": True}
 
     # Primary key
     id: Optional[int] = Field(

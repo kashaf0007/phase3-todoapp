@@ -15,6 +15,7 @@ class Conversation(SQLModel, table=True):
     Security: ALL queries MUST filter by user_id from authenticated JWT token.
     """
     __tablename__ = "conversations"
+    __table_args__ = {"extend_existing": True}
 
     # Primary key
     id: str = Field(

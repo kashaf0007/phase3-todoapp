@@ -8,8 +8,8 @@ from typing import List, Optional
 from backend.database.connection import engine
 from backend.database.init_db import create_db_and_tables
 from backend.database.deps import get_session
-from backend.models.task import Task
-from backend.services.task_service import TaskService
+from backend.src.models.task import Task  # Updated import path to use src models
+from backend.app.services.task_service import TaskService  # Updated import path
 
 
 @asynccontextmanager

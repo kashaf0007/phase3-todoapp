@@ -84,4 +84,20 @@ def create_db_and_tables():
         - For production, consider using Alembic migrations instead
     """
     from sqlmodel import SQLModel
+
+    # Clear the existing metadata to avoid conflicts
+    SQLModel.metadata.clear()
+
+    # Import models to register them with the metadata
+    # Use the enhanced models from app directory to ensure consistency
+    from ..app.models.task import Task
+    from ..src.models.conversation import Conversation
+    from ..src.models.message import Message
+
+    # Also import the User model if it exists
+    try:
+        from ..src.models.user import User
+    except ImportError:
+        pass  # User model may not be needed
+
     SQLModel.metadata.create_all(engine)

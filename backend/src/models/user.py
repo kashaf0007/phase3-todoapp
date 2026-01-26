@@ -17,6 +17,7 @@ class User(SQLModel, table=True):
     Backend only reads users for task ownership validation.
     """
     __tablename__ = "users"
+    __table_args__ = {"extend_existing": True}
 
     # Primary key
     id: str = Field(primary_key=True, description="UUID v4 user identifier")

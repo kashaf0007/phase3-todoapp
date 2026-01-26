@@ -11,11 +11,13 @@ from sqlmodel import Session
 from typing import Optional
 from pydantic import BaseModel
 
+# Use consistent import paths to avoid conflicts
 from ...database import get_session
 from ...models.conversation import Conversation
 from ...models.message import Message
 
-# Add the backend directory to the Python path to import services
+# Import the service from the correct location
+# Need to import from the backend root services directory
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 from services.chat_service import ChatService
 
@@ -71,8 +73,7 @@ async def chat(
 
         # Integrate with AI agent service to get response
         # Import the agent service to process the message
-        from app.services.agent_service import AgentService
-        from app.utils.conversation_builder import build_conversation_history
+        from ....app.services.agent_service import AgentService
 
         # Get conversation history for context
         conversation_history = ChatService.get_messages_for_conversation(
@@ -82,7 +83,14 @@ async def chat(
         )
 
         # Build history in the format expected by the agent
-        history_formatted = build_conversation_history(conversation_history)
+        # Convert Message objects to dictionaries
+        history_formatted = [
+            {
+                "role": msg.role,
+                "content": msg.content
+            }
+            for msg in conversation_history
+        ]
 
         # Process message with agent
         agent_service = AgentService()

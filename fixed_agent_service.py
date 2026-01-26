@@ -1,51 +1,15 @@
 """
-Improved Agent orchestration service
+Fixed Agent orchestration service
 """
 from typing import Dict, Any, List
 import asyncio
 import re
-from sqlmodel import Session, select
-
-# Import using relative imports - fix the path
 from ...mcp.server import get_mcp_server
-from ...src.models.user import User
-from .database import engine
 
 class AgentService:
     def __init__(self):
         # Initialize MCP server
         self.mcp_server = get_mcp_server()
-
-    async def ensure_user_exists(self, user_id: str) -> bool:
-        """
-        Ensure the user exists in the database, creating them if needed
-        """
-        try:
-            with Session(engine) as session:
-                # Check if user already exists
-                statement = select(User).where(User.id == user_id)
-                existing_user = session.exec(statement).first()
-
-                if not existing_user:
-                    # Create a new user with the provided ID
-                    # Generate a dummy email and password hash for the placeholder user
-                    from datetime import datetime
-                    new_user = User(
-                        id=user_id,
-                        email=f"{user_id}@placeholder.com",  # Placeholder email
-                        password_hash="$2b$12$dummy_hash_for_placeholder_user",  # Dummy hash
-                        created_at=datetime.utcnow()
-                    )
-                    session.add(new_user)
-                    session.commit()
-                    print(f"[DEBUG] Created placeholder user with ID: {user_id}")
-                    return True
-                else:
-                    print(f"[DEBUG] User already exists with ID: {user_id}")
-                    return True
-        except Exception as e:
-            print(f"[ERROR] Failed to ensure user exists: {str(e)}")
-            return False
 
     async def process_message_with_agent(self, user_id: str, message: str, conversation_history: List[Dict[str, str]]) -> Dict[str, Any]:
         """
@@ -53,17 +17,11 @@ class AgentService:
         """
         message_lower = message.lower().strip()
 
-        # Ensure the user exists before performing any operations
-        await self.ensure_user_exists(user_id)
-
         if "add" in message_lower and "task" in message_lower:
             # More robust parsing for task title
             # Match patterns like "add task <title>", "add a task <title>", etc.
             patterns = [
-                r"add\s+(?:a\s+)?task[:\-\s]+(.+)",  # Matches "add task:", "add task -", "add task "
-                r"create\s+(?:a\s+)?task[:\-\s]+(.+)",
-                r"make\s+(?:a\s+)?task[:\-\s]+(.+)",
-                r"add\s+(?:a\s+)?task\s+(.+)",  # Also match without punctuation: "add task buy groceries"
+                r"add\s+(?:a\s+)?task\s+(.+)",
                 r"create\s+(?:a\s+)?task\s+(.+)",
                 r"make\s+(?:a\s+)?task\s+(.+)"
             ]

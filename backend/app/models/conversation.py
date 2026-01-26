@@ -19,7 +19,8 @@ class ConversationBase(SQLModel):
 
 class Conversation(ConversationBase, table=True):
     __tablename__ = "conversations"
-    
+    __table_args__ = {"extend_existing": True}
+
     id: Optional[str] = Field(default_factory=generate_uuid, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)

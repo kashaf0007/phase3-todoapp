@@ -1,17 +1,33 @@
 """
-Conversation history builder
+Utility functions for building conversation history for the AI agent
 """
 from typing import List, Dict, Any
-from ..models.message import Message
 
-def build_conversation_history(messages: List[Message]) -> List[Dict[str, str]]:
+
+def build_conversation_history(messages: List) -> List[Dict[str, str]]:
     """
-    Build a conversation history from a list of messages
+    Convert message objects to the format expected by the AI agent
     """
-    history = []
-    for message in messages:
-        history.append({
-            "role": message.role,
-            "content": message.content
-        })
-    return history
+    result = []
+    for msg in messages:
+        # Check if it's a Message object (has attributes) or a dict (has get method)
+        if hasattr(msg, 'role') and hasattr(msg, 'content'):
+            # It's a Message object
+            result.append({
+                "role": getattr(msg, 'role', 'user'),
+                "content": getattr(msg, 'content', '')
+            })
+        elif hasattr(msg, 'get'):
+            # It's a dictionary
+            result.append({
+                "role": msg.get("role", "user"),
+                "content": msg.get("content", "")
+            })
+        else:
+            # Fallback for any other format
+            result.append({
+                "role": "user",
+                "content": str(msg) if msg is not None else ""
+            })
+
+    return result

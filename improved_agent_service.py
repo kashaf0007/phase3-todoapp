@@ -4,12 +4,18 @@ Improved Agent orchestration service
 from typing import Dict, Any, List
 import asyncio
 import re
+import sys
+import os
 from sqlmodel import Session, select
+from uuid import UUID
+import uuid
 
-# Import using relative imports - fix the path
-from ...mcp.server import get_mcp_server
-from ...src.models.user import User
-from .database import engine
+# Add the backend directory to the path to allow imports
+sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
+
+from backend.mcp.server import get_mcp_server
+from backend.src.models.user import User
+from backend.database.connection import engine
 
 class AgentService:
     def __init__(self):
@@ -25,16 +31,14 @@ class AgentService:
                 # Check if user already exists
                 statement = select(User).where(User.id == user_id)
                 existing_user = session.exec(statement).first()
-
+                
                 if not existing_user:
                     # Create a new user with the provided ID
                     # Generate a dummy email and password hash for the placeholder user
-                    from datetime import datetime
                     new_user = User(
                         id=user_id,
                         email=f"{user_id}@placeholder.com",  # Placeholder email
-                        password_hash="$2b$12$dummy_hash_for_placeholder_user",  # Dummy hash
-                        created_at=datetime.utcnow()
+                        password_hash="$2b$12$dummy_hash_for_placeholder_user"  # Dummy hash
                     )
                     session.add(new_user)
                     session.commit()

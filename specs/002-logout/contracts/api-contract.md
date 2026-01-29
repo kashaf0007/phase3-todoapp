@@ -156,6 +156,7 @@ if (response.status === 403) {
 }
 ```
 
+
 **Result**: If a logged-out user somehow reaches a protected page and attempts an API call, they are redirected to login.
 
 ---

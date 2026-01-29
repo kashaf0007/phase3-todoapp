@@ -91,3 +91,5 @@ async def chat_endpoint(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail={"error": {"type": "INTERNAL_ERROR", "message": str(e)}}
             )
+
+            

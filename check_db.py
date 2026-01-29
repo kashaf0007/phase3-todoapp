@@ -3,6 +3,7 @@ from backend.src.models.task import Task
 from sqlmodel import select
 from sqlmodel import Session
 
+
 with Session(engine) as session:
     # Find tasks for our test user
     user_tasks = session.exec(select(Task).where(Task.user_id == 'debug_test_user')).all()
